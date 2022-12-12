@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 import datetime
+import os
 
 import json
 import requests
@@ -8,6 +9,19 @@ import requests
 import streamlit as st
 import altair as alt
 from vega_datasets import data
+
+
+# Display container version
+# ==============================================================================
+container_version = None
+if os.path.isfile('./container_version.txt'):
+    with open('./container_version.txt') as f:
+        container_version = f.readline().strip()
+if container_version is None or len(container_version) == 0:
+    container_version = "not available"
+
+version_text = st.sidebar.text(f"container version:\n{container_version}\n ")
+# ==============================================================================
 
 
 # Declare progress and status elements
