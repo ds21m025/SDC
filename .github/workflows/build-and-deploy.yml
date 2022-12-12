@@ -26,5 +26,14 @@ jobs:
       uses: docker/build-push-action@v3.2.0
       with:
        push: true
-       tags: ds21m025/sdc_technikum-wien:covid_dashboard_${{ github.sha }}
+       tags: index.docker.io/${{ secrets.DOCKERHUB_USER }}/sdc_technikum-wien:covid_dashboard_${{ github.sha }}
        file: ./Dockerfile
+
+    - name: Azure WebApp
+      uses: Azure/webapps-deploy@v2.2.5
+      with:
+        app-name: WA-SDC-Covid-Dashboard
+        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+        slot-name: 'production'
+        images: index.docker.io/${{ secrets.DOCKERHUB_USER }}/sdc_technikum-wien:covid_dashboard_${{ github.sha }}
+        
